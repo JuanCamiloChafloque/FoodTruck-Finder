@@ -42,7 +42,7 @@ function App() {
     shadowSize: [41, 41],
   });
 
-  const foodIcon = L.icon({
+  const truckIcon = L.icon({
     iconUrl:
       "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png",
     shadowUrl:
@@ -141,7 +141,7 @@ function App() {
             <Marker
               key={idx}
               position={[point.latitude, point.longitude]}
-              icon={foodIcon}
+              icon={truckIcon}
             >
               <Popup className="popup-container">
                 <strong>{point.address}</strong> <br />
