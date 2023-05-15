@@ -42,6 +42,17 @@ function App() {
     shadowSize: [41, 41],
   });
 
+  const foodIcon = L.icon({
+    iconUrl:
+      "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png",
+    shadowUrl:
+      "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41],
+  });
+
   useEffect(() => {
     autoCompleteRef.current = new window.google.maps.places.Autocomplete(
       inputRef.current,
@@ -127,7 +138,11 @@ function App() {
         <UserLocation />
         {points.map((point, idx) => {
           return (
-            <Marker key={idx} position={[point.latitude, point.longitude]}>
+            <Marker
+              key={idx}
+              position={[point.latitude, point.longitude]}
+              icon={foodIcon}
+            >
               <Popup className="popup-container">
                 <strong>{point.address}</strong> <br />
                 <strong>Applicant:</strong> {point.applicant} <br />
