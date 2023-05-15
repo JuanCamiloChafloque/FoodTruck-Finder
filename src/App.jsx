@@ -53,6 +53,7 @@ function App() {
       const fullAddress = `${place[0]["long_name"]} ${place[1]["long_name"]}, ${place[3]["long_name"]}, ${place[5]["long_name"]}, ${place[6]["long_name"]}, ${place[7]["long_name"]}`;
       setInputAddress(fullAddress);
     });
+    console.log("Init");
   }, []);
 
   const handleSubmit = async (e) => {
