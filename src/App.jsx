@@ -10,7 +10,7 @@ import {
   Circle,
   useMapEvents,
 } from "react-leaflet";
-import * as L from "leaflet";
+import { userIcon, truckIcon } from "./utils/markerIcons";
 import "./App.css";
 
 function App() {
@@ -31,28 +31,6 @@ function App() {
   const [message, setMessage] = useState("");
   const [userLocation, setUserLocation] = useState([37.77493, -122.41116]);
 
-  const userIcon = L.icon({
-    iconUrl:
-      "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png",
-    shadowUrl:
-      "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41],
-  });
-
-  const truckIcon = L.icon({
-    iconUrl:
-      "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png",
-    shadowUrl:
-      "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41],
-  });
-
   useEffect(() => {
     autoCompleteRef.current = new window.google.maps.places.Autocomplete(
       inputRef.current,
@@ -64,7 +42,6 @@ function App() {
       const fullAddress = `${place[0]["long_name"]} ${place[1]["long_name"]}, ${place[3]["long_name"]}, ${place[5]["long_name"]}, ${place[6]["long_name"]}, ${place[7]["long_name"]}`;
       setInputAddress(fullAddress);
     });
-    console.log("Init");
   }, []);
 
   const handleSubmit = async (e) => {
