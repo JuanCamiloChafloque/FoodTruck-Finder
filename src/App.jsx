@@ -32,17 +32,19 @@ function App() {
   const [userLocation, setUserLocation] = useState([37.77493, -122.41116]);
 
   useEffect(() => {
-    autoCompleteRef.current = new window.google.maps.places.Autocomplete(
-      inputRef.current,
-      options
-    );
-    autoCompleteRef.current.addListener("place_changed", async function () {
-      const { address_components: place } =
-        await autoCompleteRef.current.getPlace();
-      const fullAddress = `${place[0]["long_name"]} ${place[1]["long_name"]}, ${place[3]["long_name"]}, ${place[5]["long_name"]}, ${place[6]["long_name"]}, ${place[7]["long_name"]}`;
-      setInputAddress(fullAddress);
-    });
-  }, []);
+    if (window.google) {
+      autoCompleteRef.current = new window.google.maps.places.Autocomplete(
+        inputRef.current,
+        options
+      );
+      autoCompleteRef.current.addListener("place_changed", async function () {
+        const { address_components: place } =
+          await autoCompleteRef.current.getPlace();
+        const fullAddress = `${place[0]["long_name"]} ${place[1]["long_name"]}, ${place[3]["long_name"]}, ${place[5]["long_name"]}, ${place[6]["long_name"]}, ${place[7]["long_name"]}`;
+        setInputAddress(fullAddress);
+      });
+    }
+  }, [window.google]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
