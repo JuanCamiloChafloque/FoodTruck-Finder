@@ -26,6 +26,7 @@ function App() {
     types: ["establishment"],
   };
 
+  const [map, setMap] = useState(null);
   const [inputAddress, setInputAddress] = useState("");
   const [points, setPoints] = useState([]);
   const [message, setMessage] = useState("");
@@ -40,7 +41,10 @@ function App() {
       autoCompleteRef.current.addListener("place_changed", async function () {
         const { address_components: place } =
           await autoCompleteRef.current.getPlace();
-        const fullAddress = `${place[0]["long_name"]} ${place[1]["long_name"]}, ${place[3]["long_name"]}, ${place[5]["long_name"]}, ${place[6]["long_name"]}, ${place[7]["long_name"]}`;
+        let fullAddress = "";
+        place.forEach((p) => {
+          fullAddress += p["long_name"] + ",";
+        });
         setInputAddress(fullAddress);
       });
     }
@@ -75,6 +79,8 @@ function App() {
           `https://data.sfgov.org/resource/rqzj-sfat.json?$where=within_circle(location,${result.lat},${result.lng},2000)`
         );
         setUserLocation([result.lat, result.lng]);
+        map.setView([result.lat, result.lng], 13);
+
         if (data.length === 0) {
           setMessage("No results found!");
         }
@@ -86,8 +92,10 @@ function App() {
   };
 
   const UserLocation = () => {
-    useMapEvents({
+    const map = useMapEvents({
       click(e) {
+        setMessage("");
+        map.setView([e.latlng.lat, e.latlng.lng], 13);
         setUserLocation([e.latlng.lat, e.latlng.lng]);
         getMarkersFromCoordinates(e.latlng.lat, e.latlng.lng);
       },
@@ -109,6 +117,7 @@ function App() {
         zoom={13}
         scrollWheelZoom={false}
         className="map-container"
+        ref={setMap}
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
