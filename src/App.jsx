@@ -63,7 +63,13 @@ function App() {
     if (data.length === 0) {
       setMessage("No results found!");
     }
-    setPoints(data);
+    const filtered = data.filter(
+      (p) =>
+        p.approved &&
+        p.expirationdate &&
+        p.expirationdate > new Date().toISOString()
+    );
+    setPoints(filtered);
   };
 
   const getLocationFromAddress = async () => {
@@ -84,7 +90,13 @@ function App() {
         if (data.length === 0) {
           setMessage("No results found!");
         }
-        setPoints(data);
+        const filtered = data.filter(
+          (p) =>
+            p.approved &&
+            p.expirationdate &&
+            p.expirationdate > new Date().toISOString()
+        );
+        setPoints(filtered);
       } else {
         setMessage("Address not found!");
       }
@@ -133,7 +145,12 @@ function App() {
             >
               <Popup className="popup-container">
                 <strong>{point.address}</strong> <br />
-                <strong>Applicant:</strong> {point.applicant} <br />
+                <strong>Applicant:</strong> {point.applicant}, {point.permit}{" "}
+                <br />
+                <strong>Location: </strong> {point.locationdescription} <br />
+                <strong>Status:</strong> {point.status.toLowerCase()} <br />
+                <strong>Expiration Date:</strong>{" "}
+                {point.expirationdate.substring(0, 10)} <br />
                 <strong>Type:</strong> {point.facilitytype} <br />
                 <strong>Food Items:</strong> {point.fooditems}
               </Popup>
@@ -156,8 +173,8 @@ function App() {
       <div className="form-container">
         <h1>Food Truck Finder</h1>
         <p className="info-text">
-          The best app to find the best food trucks in SF near you (2km radius)!{" "}
-          <br />
+          The best app to find the best DPW approved food trucks in SF near you
+          (2km radius)! <br />
           Find them by either:
         </p>
         <p>1. Entering your current address to see nearby food trucks.</p>
