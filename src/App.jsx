@@ -6,6 +6,7 @@ import {
   TileLayer,
   Marker,
   Popup,
+  Tooltip,
   LayerGroup,
   Circle,
   useMapEvents,
@@ -115,9 +116,9 @@ function App() {
 
     return userLocation ? (
       <Marker position={userLocation || [37.77493, -122.41116]} icon={userIcon}>
-        <Popup>
+        <Tooltip direction="center">
           <strong>Your current Location</strong>
-        </Popup>
+        </Tooltip>
       </Marker>
     ) : null;
   };
@@ -143,6 +144,7 @@ function App() {
               position={[point.latitude, point.longitude]}
               icon={truckIcon}
             >
+              <Tooltip>Click the marker for more information</Tooltip>
               <Popup className="popup-container">
                 <strong>{point.address}</strong> <br />
                 <strong>Applicant:</strong> {point.applicant}, {point.permit}{" "}
